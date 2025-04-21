@@ -8,7 +8,8 @@ import { UserModule } from './user/user.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost:27017/DATS'),
+    MongooseModule.forRoot('mongodb://localhost:27017/DATS'),
+    // MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost:27017/DATS'),
     UserModule,
   ],
   controllers: [AppController],
