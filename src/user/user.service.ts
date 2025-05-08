@@ -15,10 +15,7 @@ export class UserService {
 ) {}
 
 async create(createUserDto: CreateUserDto): Promise<User> {
-  // Hash the password before saving
-  const saltRounds = 10; // Number of salt rounds for bcrypt
-  createUserDto.password = await bcrypt.hash(createUserDto.password, saltRounds);
-
+ 
   const newUser = new this.userModel(createUserDto);
   return newUser.save(); // Save the user to the database
 }
@@ -29,11 +26,11 @@ async login(email: string, password: string): Promise<{ message: string; token: 
     throw new UnauthorizedException('Invalid credentials'); // Throw an exception if user not found
   }
 
-  // Compare the hashed password with the plain-text password
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    throw new UnauthorizedException('Invalid credentials'); // Throw an exception if password is incorrect
-  }
+  // // Compare the hashed password with the plain-text password
+  // const isPasswordValid = await bcrypt.compare(password, user.password);
+  // if (!isPasswordValid) {
+  //   throw new UnauthorizedException('Invalid credentials'); // Throw an exception if password is incorrect
+  // }
 
   const payload = { email: user.email, sub: user._id }; // Create a payload for JWT
   const token = this.jwtService.sign(payload); // Sign the payload to create a JWT token
