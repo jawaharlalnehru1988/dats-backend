@@ -5,7 +5,6 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.schema';
-import * as bcrypt from 'bcrypt'; // Import bcrypt
 
 
 @Injectable()
@@ -17,28 +16,22 @@ export class UserService {
 async create(createUserDto: CreateUserDto): Promise<User> {
  
   const newUser = new this.userModel(createUserDto);
-  return newUser.save(); // Save the user to the database
+  return newUser.save(); 
 }
 
 async login(email: string, password: string): Promise<{ message: string; token: string }> {
   const user = await this.userModel.findOne({ email }).exec();
   if (!user) {
-    throw new UnauthorizedException('Invalid credentials'); // Throw an exception if user not found
+    throw new UnauthorizedException('Invalid credentials'); 
   }
 
-  // // Compare the hashed password with the plain-text password
-  // const isPasswordValid = await bcrypt.compare(password, user.password);
-  // if (!isPasswordValid) {
-  //   throw new UnauthorizedException('Invalid credentials'); // Throw an exception if password is incorrect
-  // }
-
-  const payload = { email: user.email, sub: user._id }; // Create a payload for JWT
-  const token = this.jwtService.sign(payload); // Sign the payload to create a JWT token
-  return { message: "Successfully Logged In", token }; // Return the user and token
+  const payload = { email: user.email, sub: user._id }; 
+  const token = this.jwtService.sign(payload); 
+  return { message: "Successfully Logged In", token }; 
 }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().exec(); // Retrieve all users from the database
+    return this.userModel.find().exec(); 
   }
 
   async findOne(id: string): Promise<User | string> {
