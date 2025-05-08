@@ -6,12 +6,14 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { Connection } from 'mongoose';
 import { InjectConnection } from '@nestjs/mongoose';
+import { BlogModule } from './blog/blog.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot('mongodb+srv://nehru00123:Soundarya1994@harekrishna.iaouzqs.mongodb.net/DATS?retryWrites=true&w=majority&appName=harekrishna'),
     UserModule,
+    BlogModule,
   ],
   controllers: [AppController],
   providers: [AppService],
