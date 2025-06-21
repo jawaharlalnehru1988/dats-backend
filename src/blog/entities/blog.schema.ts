@@ -4,19 +4,19 @@ import { Document } from 'mongoose';
 @Schema()
 export class Blog extends Document {
   @Prop({ required: true })
-  title: string;
+  value: string;
 
   @Prop({ required: true })
   content: string;
 
   @Prop({ required: true })
-  author: string;
+  heading: string;
 
   @Prop({ default: Date.now })
   createdAt: Date;
-
-  @Prop({ default: true })
-  isPublished: boolean;
+  
+  @Prop({ default: Date.now })
+  updatedAt: Date;
 }
 
 export const BlogSchema = SchemaFactory.createForClass(Blog);
