@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { Connection } from 'mongoose';
 import { InjectConnection } from '@nestjs/mongoose';
 import { BlogModule } from './blog/blog.module';
+import { BgSlokaModule } from './bg-sloka/bg-sloka.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { BlogModule } from './blog/blog.module';
     MongooseModule.forRoot('mongodb+srv://nehru00123:Soundarya1994@harekrishna.iaouzqs.mongodb.net/DATS?retryWrites=true&w=majority&appName=harekrishna'),
     UserModule,
     BlogModule,
+    BgSlokaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
