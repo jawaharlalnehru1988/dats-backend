@@ -10,6 +10,9 @@ export class Blog extends Document {
   content: string;
 
   @Prop({ required: true })
+  orderNo: number;
+
+  @Prop({ required: true })
   heading: string;
 
   @Prop({ default: Date.now })
