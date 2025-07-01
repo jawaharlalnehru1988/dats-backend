@@ -8,6 +8,7 @@ import { Connection } from 'mongoose';
 import { InjectConnection } from '@nestjs/mongoose';
 import { BlogModule } from './blog/blog.module';
 import { BgSlokaModule } from './bg-sloka/bg-sloka.module';
+import { BgSlokaChaptersModule } from './bg-sloka-chapters/bg-sloka-chapters.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { BgSlokaModule } from './bg-sloka/bg-sloka.module';
     UserModule,
     BlogModule,
     BgSlokaModule,
+    BgSlokaChaptersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
