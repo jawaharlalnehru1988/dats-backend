@@ -9,6 +9,7 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { BlogModule } from './blog/blog.module';
 import { BgSlokaModule } from './bg-sloka/bg-sloka.module';
 import { BgSlokaChaptersModule } from './bg-sloka-chapters/bg-sloka-chapters.module';
+import { RamBhajanModule } from './ram-bhajan/ram-bhajan.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BgSlokaChaptersModule } from './bg-sloka-chapters/bg-sloka-chapters.mod
     BlogModule,
     BgSlokaModule,
     BgSlokaChaptersModule,
+    RamBhajanModule,
   ],
   controllers: [AppController],
   providers: [AppService],

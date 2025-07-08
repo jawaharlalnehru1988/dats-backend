@@ -4,9 +4,11 @@ import { ApiProperty } from '@nestjs/swagger';
 
 class QaSection {
   @ApiProperty()
+  @Prop({ required: false })
   question: string;
 
   @ApiProperty()
+  @Prop({ required: false })
   answer: string;
 }
 
@@ -21,7 +23,7 @@ export class BgSlokaChapter extends Document {
   languageType: string;
 
   @ApiProperty({ maxLength: 15000 })
-  @Prop({ required: true, type: String, maxlength: 15000 })
+  @Prop({ required: false, type: String, maxlength: 15000 })
   slokaText: string;
 
   @ApiProperty()
