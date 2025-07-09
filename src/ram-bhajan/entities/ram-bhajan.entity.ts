@@ -12,7 +12,7 @@ export class CardItem {
   desc: string;
   audioData: AudioData;
   rating: string;
-  price: string;
+  action: string;
 }
 
 export class RamBhajan {

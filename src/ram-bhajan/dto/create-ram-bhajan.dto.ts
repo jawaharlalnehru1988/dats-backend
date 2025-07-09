@@ -34,7 +34,7 @@ export class CardItemDto {
   rating: string;
 
   @ApiProperty()
-  price: string;
+  action: string;
 }
 
 export class CreateRamBhajanDto {

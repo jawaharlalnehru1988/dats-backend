@@ -39,7 +39,7 @@ export class CardItem {
   rating: string;
 
   @Prop({ required: true })
-  price: string;
+  action: string;
 }
 
 export const CardItemSchema = SchemaFactory.createForClass(CardItem);
