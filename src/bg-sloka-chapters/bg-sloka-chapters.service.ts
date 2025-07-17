@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { BgSlokaChapter } from './entities/bg-sloka-chapters.schema';
 import { CreateBgSlokaChapterDto } from './dto/create-bg-sloka-chapter.dto';
 import { UpdateBgSlokaChapterDto } from './dto/update-bg-sloka-chapter.dto';
+import { BgSlokaChapter } from './entities/bg-sloka-chapter.schema';
 
 @Injectable()
 export class BgSlokaChaptersService {
@@ -15,8 +15,28 @@ export class BgSlokaChaptersService {
     return new this.chapterModel(dto).save();
   }
 
-  async findAll(): Promise<BgSlokaChapter[]> {
-    return this.chapterModel.find().exec();
+  async findAll(): Promise<any[]> {
+    const allItems = await this.chapterModel.find().exec();
+    
+    // Group by categoryName and merge cardItems
+    const groupedData: any[] = allItems.reduce((acc: any[], item) => {
+      const existingCategory = acc.find(group => group.categoryName === item.categoryName);
+      
+      if (existingCategory) {
+        // Merge cardItems from current item into existing category
+        existingCategory.cardItems.push(...item.cardItems);
+      } else {
+        // Create new category group
+        acc.push({
+          categoryName: item.categoryName,
+          cardItems: [...item.cardItems]
+        });
+      }
+      
+      return acc;
+    }, []);
+    
+    return groupedData;
   }
 
   async findOne(id: string): Promise<BgSlokaChapter | null> {

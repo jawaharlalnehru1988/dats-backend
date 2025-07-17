@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BgSlokaChaptersService } from './bg-sloka-chapters.service';
 import { BgSlokaChaptersController } from './bg-sloka-chapters.controller';
-import { BgSlokaChapter, BgSlokaChapterSchema } from './entities/bg-sloka-chapters.schema';
+import { BgSlokaChapter, BgSlokaChapterSchema } from './entities/bg-sloka-chapter.schema';
 
 @Module({
   imports: [

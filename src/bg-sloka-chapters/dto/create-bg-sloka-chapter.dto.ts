@@ -1,31 +1,51 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-class QaSectionDto {
+
+export class AudioDataDto {
   @ApiProperty()
-  question: string;
+  audioSrc: string;
 
   @ApiProperty()
-  answer: string;
+  imageSrc: string;
+
+  @ApiProperty()
+  auther: string;
+
+  @ApiProperty()
+  title: string;
+}
+
+export class CardItemDto {
+  @ApiProperty()
+  img: string;
+
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  category: string;
+
+  @ApiProperty()
+  desc: string;
+
+  @ApiProperty({ type: AudioDataDto })
+  audioData: AudioDataDto;
+
+  @ApiProperty()
+  rating: string;
+
+  @ApiProperty()
+  action: string;
 }
 
 export class CreateBgSlokaChapterDto {
-  @ApiProperty()
-  slokaAudio: string;
+
 
   @ApiProperty()
-  languageType: string;
+  categoryName: string;
 
-  @ApiProperty({ maxLength: 8000 })
-  slokaText: string;
-
-  @ApiProperty()
-  chapterName: string;
-
-  @ApiProperty()
-  chapterNo: string;
-
-  @ApiProperty({ type: [QaSectionDto] })
-  qaSection: QaSectionDto[];
+  @ApiProperty({ type: [CardItemDto] })
+  cardItems: CardItemDto[];
 }
 
 import { PartialType } from '@nestjs/swagger';

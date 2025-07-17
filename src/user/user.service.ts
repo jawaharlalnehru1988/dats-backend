@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.schema';
+import * as crypto from 'crypto';
 
 
 @Injectable()
@@ -13,10 +14,25 @@ export class UserService {
       private jwtService: JwtService, 
 ) {}
 
-async create(createUserDto: CreateUserDto): Promise<User> {
- 
-  const newUser = new this.userModel(createUserDto);
-  return newUser.save(); 
+async create(createUserDto: CreateUserDto): Promise<{ message: string; user?: string }> {
+  try {
+    const newUser = new this.userModel(createUserDto);
+    const user = await newUser.save();
+
+    // Encrypt user details
+    const key = crypto.randomBytes(32); // 256-bit key
+    const iv = crypto.randomBytes(16); // Initialization vector
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+    let encrypted = cipher.update(JSON.stringify(user), 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+
+    return { message: "User created successfully", user: encrypted };
+  } catch (error) {
+    if (error.code === 11000) {
+      return { message: 'A user with this email already exists.' };
+    }
+    throw error;
+  }
 }
 
 async login(email: string, password: string): Promise<{ message: string; token: string }> {

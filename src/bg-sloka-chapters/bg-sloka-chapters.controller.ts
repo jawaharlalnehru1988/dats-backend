@@ -3,7 +3,8 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/s
 import { BgSlokaChaptersService } from './bg-sloka-chapters.service';
 import { CreateBgSlokaChapterDto } from './dto/create-bg-sloka-chapter.dto';
 import { UpdateBgSlokaChapterDto } from './dto/update-bg-sloka-chapter.dto';
-import { BgSlokaChapter } from './entities/bg-sloka-chapters.schema';
+import { BgSlokaChapter } from './entities/bg-sloka-chapter.schema';
+
 
 @ApiTags('bg-sloka-chapters')
 @Controller('bg-sloka-chapters')
