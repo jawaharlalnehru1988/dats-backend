@@ -14,7 +14,9 @@ import { RamBhajanModule } from './ram-bhajan/ram-bhajan.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot('mongodb+srv://nehru00123:Soundarya1994@harekrishna.iaouzqs.mongodb.net/DATS?retryWrites=true&w=majority&appName=harekrishna'),
+    MongooseModule.forRoot(
+      'mongodb+srv://nehru00123:Soundarya1994@harekrishna.iaouzqs.mongodb.net/DATS?retryWrites=true&w=majority&appName=harekrishna',
+    ),
     UserModule,
     BlogModule,
     BgSlokaModule,
@@ -31,8 +33,8 @@ export class AppModule implements OnModuleInit {
     try {
       await this.connection.asPromise();
       console.log('Database connected successfully');
-    } catch (error) {
-      console.error('Database connection failed:', error.message);
+    } catch (error: any) {
+      console.error('Database connection failed:', (error as Error).message);
     }
   }
 }

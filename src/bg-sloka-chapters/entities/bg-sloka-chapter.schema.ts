@@ -53,4 +53,5 @@ export class BgSlokaChapter extends Document {
   cardItems: CardItem[];
 }
 
-export const BgSlokaChapterSchema = SchemaFactory.createForClass(BgSlokaChapter);
+export const BgSlokaChapterSchema =
+  SchemaFactory.createForClass(BgSlokaChapter);

@@ -5,49 +5,82 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.schema';
-import * as crypto from 'crypto';
-
+import { MongoError } from '../common/types';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>,
-      private jwtService: JwtService, 
-) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    private jwtService: JwtService,
+  ) {}
 
-async create(createUserDto: CreateUserDto): Promise<{ message: string; user?: string }> {
-  try {
-    const newUser = new this.userModel(createUserDto);
-    const user = await newUser.save();
+  async create(
+    createUserDto: CreateUserDto,
+  ): Promise<{ message: string; user?: any }> {
+    try {
+      // Hash the password before saving
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(
+        createUserDto.password,
+        saltRounds,
+      );
 
-    // Encrypt user details
-    const key = crypto.randomBytes(32); // 256-bit key
-    const iv = crypto.randomBytes(16); // Initialization vector
-    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-    let encrypted = cipher.update(JSON.stringify(user), 'utf8', 'hex');
-    encrypted += cipher.final('hex');
+      const newUser = new this.userModel({
+        ...createUserDto,
+        password: hashedPassword,
+      });
 
-    return { message: "User created successfully", user: encrypted };
-  } catch (error) {
-    if (error.code === 11000) {
-      return { message: 'A user with this email already exists.' };
+      const user = await newUser.save();
+
+      // Return user without password
+      const userResponse = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        role: user.role,
+        isActive: user.isActive,
+      };
+      console.log('User created:', userResponse);
+      return { message: 'User created successfully', user: userResponse };
+    } catch (error: unknown) {
+      if ((error as MongoError).code === 11000) {
+        return { message: 'A user with this email already exists.' };
+      }
+      throw error;
     }
-    throw error;
-  }
-}
-
-async login(email: string, password: string): Promise<{ message: string; token: string }> {
-  const user = await this.userModel.findOne({ email }).exec();
-  if (!user) {
-    throw new UnauthorizedException('Invalid credentials'); 
   }
 
-  const payload = { email: user.email, sub: user._id }; 
-  const token = this.jwtService.sign(payload); 
-  return { message: "Successfully Logged In", token }; 
-}
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ message: string; token: string }> {
+    const user = await this.userModel.findOne({ email }).exec();
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    // Validate password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const payload = {
+      name: user.name,
+      email: user.email,
+      sub: user._id,
+      role: user.role,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return { message: 'Successfully Logged In', token };
+  }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().exec(); 
+    return this.userModel.find().exec();
   }
 
   async findOne(id: string): Promise<User | string> {
@@ -58,7 +91,10 @@ async login(email: string, password: string): Promise<{ message: string; token: 
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User | string> {
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User | string> {
     const updatedUser = await this.userModel
       .findByIdAndUpdate(id, updateUserDto, { new: true })
       .exec();

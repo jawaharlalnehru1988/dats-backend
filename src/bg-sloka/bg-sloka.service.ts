@@ -24,8 +24,13 @@ export class BgSlokaService {
     return this.bgSlokaModel.findById(id).exec();
   }
 
-  async update(id: string, updateBgSlokaDto: UpdateBgSlokaDto): Promise<BgSloka | null> {
-    return this.bgSlokaModel.findByIdAndUpdate(id, updateBgSlokaDto, { new: true }).exec();
+  async update(
+    id: string,
+    updateBgSlokaDto: UpdateBgSlokaDto,
+  ): Promise<BgSloka | null> {
+    return this.bgSlokaModel
+      .findByIdAndUpdate(id, updateBgSlokaDto, { new: true })
+      .exec();
   }
 
   async remove(id: string): Promise<BgSloka | null> {

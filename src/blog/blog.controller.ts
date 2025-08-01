@@ -1,7 +1,21 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { Blog } from './entities/blog.schema';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('blog')
 @Controller('blog')
@@ -24,7 +38,7 @@ export class BlogController {
   }
 
   @Get(':id')
-   @ApiOperation({ summary: 'Get a blog by ID' })
+  @ApiOperation({ summary: 'Get a blog by ID' })
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Blog found.' })
   findOne(@Param('id') id: string) {

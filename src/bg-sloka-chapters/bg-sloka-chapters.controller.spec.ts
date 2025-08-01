@@ -11,7 +11,9 @@ describe('BgSlokaChaptersController', () => {
       providers: [BgSlokaChaptersService],
     }).compile();
 
-    controller = module.get<BgSlokaChaptersController>(BgSlokaChaptersController);
+    controller = module.get<BgSlokaChaptersController>(
+      BgSlokaChaptersController,
+    );
   });
 
   it('should be defined', () => {

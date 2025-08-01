@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-
 export class AudioDataDto {
   @ApiProperty()
   audioSrc: string;
@@ -39,8 +38,6 @@ export class CardItemDto {
 }
 
 export class CreateBgSlokaChapterDto {
-
-
   @ApiProperty()
   categoryName: string;
 
@@ -50,4 +47,6 @@ export class CreateBgSlokaChapterDto {
 
 import { PartialType } from '@nestjs/swagger';
 
-export class UpdateBgSlokaChapterDto extends PartialType(CreateBgSlokaChapterDto) {}
+export class UpdateBgSlokaChapterDto extends PartialType(
+  CreateBgSlokaChapterDto,
+) {}

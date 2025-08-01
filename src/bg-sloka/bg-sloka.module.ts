@@ -6,7 +6,7 @@ import { BgSloka, BgSlokaSchema } from './entities/sloka.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: BgSloka.name, schema: BgSlokaSchema }])
+    MongooseModule.forFeature([{ name: BgSloka.name, schema: BgSlokaSchema }]),
   ],
   controllers: [BgSlokaController],
   providers: [BgSlokaService],

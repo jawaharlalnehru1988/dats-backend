@@ -6,7 +6,9 @@ import { RamBhajan, RamBhajanSchema } from './entities/ram-bhajan.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: RamBhajan.name, schema: RamBhajanSchema }])
+    MongooseModule.forFeature([
+      { name: RamBhajan.name, schema: RamBhajanSchema },
+    ]),
   ],
   controllers: [RamBhajanController],
   providers: [RamBhajanService],

@@ -5,37 +5,48 @@ import { RamBhajan } from './entities/ram-bhajan.schema';
 import { CreateRamBhajanDto } from './dto/create-ram-bhajan.dto';
 import { UpdateRamBhajanDto } from './dto/update-ram-bhajan.dto';
 
+export interface GroupedData {
+  categoryName: string;
+  cardItems: any[];
+}
+
 @Injectable()
 export class RamBhajanService {
   constructor(
-    @InjectModel(RamBhajan.name) private readonly ramBhajanModel: Model<RamBhajan>,
+    @InjectModel(RamBhajan.name)
+    private readonly ramBhajanModel: Model<RamBhajan>,
   ) {}
 
   async create(createDto: CreateRamBhajanDto): Promise<RamBhajan> {
     return new this.ramBhajanModel(createDto).save();
   }
 
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<GroupedData[]> {
     const allItems = await this.ramBhajanModel.find().exec();
-    
+
     // Group by categoryName and merge cardItems
-    const groupedData: any[] = allItems.reduce((acc: any[], item) => {
-      const existingCategory = acc.find(group => group.categoryName === item.categoryName);
-      
-      if (existingCategory) {
-        // Merge cardItems from current item into existing category
-        existingCategory.cardItems.push(...item.cardItems);
-      } else {
-        // Create new category group
-        acc.push({
-          categoryName: item.categoryName,
-          cardItems: [...item.cardItems]
-        });
-      }
-      
-      return acc;
-    }, []);
-    
+    const groupedData: GroupedData[] = allItems.reduce(
+      (acc: GroupedData[], item) => {
+        const existingCategory = acc.find(
+          (group) => group.categoryName === item.categoryName,
+        );
+
+        if (existingCategory) {
+          // Merge cardItems from current item into existing category
+          existingCategory.cardItems.push(...item.cardItems);
+        } else {
+          // Create new category group
+          acc.push({
+            categoryName: item.categoryName,
+            cardItems: [...item.cardItems],
+          });
+        }
+
+        return acc;
+      },
+      [],
+    );
+
     return groupedData;
   }
 
@@ -45,8 +56,13 @@ export class RamBhajanService {
     return item;
   }
 
-  async update(id: string, updateDto: UpdateRamBhajanDto): Promise<RamBhajan | null> {
-    const item = await this.ramBhajanModel.findByIdAndUpdate(id, updateDto, { new: true }).exec();
+  async update(
+    id: string,
+    updateDto: UpdateRamBhajanDto,
+  ): Promise<RamBhajan | null> {
+    const item = await this.ramBhajanModel
+      .findByIdAndUpdate(id, updateDto, { new: true })
+      .exec();
     if (!item) throw new NotFoundException('Not found');
     return item;
   }

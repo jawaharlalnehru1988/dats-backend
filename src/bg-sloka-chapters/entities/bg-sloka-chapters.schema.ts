@@ -39,4 +39,5 @@ export class BgSlokaChapter extends Document {
   qaSection: QaSection[];
 }
 
-export const BgSlokaChapterSchema = SchemaFactory.createForClass(BgSlokaChapter);
+export const BgSlokaChapterSchema =
+  SchemaFactory.createForClass(BgSlokaChapter);

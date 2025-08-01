@@ -1,18 +1,18 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBgSlokaDto {
-    @ApiProperty()
-    slokaNo: string;
+  @ApiProperty()
+  slokaNo: string;
 
-    @ApiProperty()
-    orderNo:number;
+  @ApiProperty()
+  orderNo: number;
 
-    @ApiProperty()
-    slokaText: string;
+  @ApiProperty()
+  slokaText: string;
 
-    @ApiProperty()
-    SlokaVoice: string;
+  @ApiProperty()
+  SlokaVoice: string;
 
-    @ApiProperty()
-    slokaMeaning: string;
+  @ApiProperty()
+  slokaMeaning: string;
 }
