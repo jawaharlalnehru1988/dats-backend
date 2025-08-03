@@ -10,6 +10,12 @@ import { BlogModule } from './blog/blog.module';
 import { BgSlokaModule } from './bg-sloka/bg-sloka.module';
 import { BgSlokaChaptersModule } from './bg-sloka-chapters/bg-sloka-chapters.module';
 import { RamBhajanModule } from './ram-bhajan/ram-bhajan.module';
+import { HarekrishnaKirtanModule } from './harekrishna-kirtan/harekrishna-kirtan.module';
+import { HarekrishnaStoriesModule } from './harekrishna-stories/harekrishna-stories.module';
+import { HarekrishnaPhilosophyModule } from './harekrishna-philosophy/harekrishna-philosophy.module';
+import { DiscussionsModule } from './discussions/discussions.module';
+import { ImagesModule } from './images/images.module';
+import { VideosModule } from './videos/videos.module';
 
 @Module({
   imports: [
@@ -22,6 +28,12 @@ import { RamBhajanModule } from './ram-bhajan/ram-bhajan.module';
     BgSlokaModule,
     BgSlokaChaptersModule,
     RamBhajanModule,
+    HarekrishnaKirtanModule,
+    HarekrishnaStoriesModule,
+    HarekrishnaPhilosophyModule,
+    DiscussionsModule,
+    ImagesModule,
+    VideosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
