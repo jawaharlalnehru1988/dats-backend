@@ -10,8 +10,8 @@ import { AuthGuard } from '../auth/auth.guard';
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'your-secret-key', // Use environment variable
-      signOptions: { expiresIn: '1h' }, // Token expiration time
+      secret: process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production',
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   controllers: [UserController],

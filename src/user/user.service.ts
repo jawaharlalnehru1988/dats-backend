@@ -74,6 +74,7 @@ export class UserService {
       sub: user._id,
       role: user.role,
     };
+    
     const token = this.jwtService.sign(payload);
 
     return { message: 'Successfully Logged In', token };

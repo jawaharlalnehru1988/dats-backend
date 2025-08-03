@@ -15,7 +15,7 @@ import { AuthGuard } from '../auth/auth.guard';
       { name: BgSlokaChapter.name, schema: BgSlokaChapterSchema },
     ]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'your-secret-key',
+      secret: process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production',
       signOptions: { expiresIn: '1h' },
     }),
   ],

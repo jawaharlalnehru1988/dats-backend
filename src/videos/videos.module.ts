@@ -13,7 +13,7 @@ import { RolesGuard } from '../auth/roles.guard';
       { name: Video.name, schema: VideoSchema }
     ]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'your-secret-key',
+      secret: process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production',
       signOptions: { expiresIn: '1h' },
     }),
   ],

@@ -12,10 +12,21 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  // Enable CORS using NestJS's built-in method
-  app.enableCors();
+  
+  // Enable CORS with all origins access
+  app.enableCors({
+    origin: true, // Allows all origins
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    credentials: true, // Allow cookies and authorization headers
+  });
 
-  await app.listen(process.env.PORT ?? 3000);
+  const port = process.env.PORT ?? 3000;
+  await app.listen(port);
+  
+  console.log(`🚀 Application is running on: http://localhost:${port}`);
+  console.log(`📚 API Documentation available at: http://localhost:${port}/api`);
+  console.log(`🌐 CORS enabled for all origins`);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises

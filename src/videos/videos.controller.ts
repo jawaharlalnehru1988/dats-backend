@@ -14,7 +14,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { VideosService } from './videos.service';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
-import { AddCommentDto } from './dto/add-comment.dto';
+import { AddVideoCommentDto } from './dto/add-comment.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -83,7 +83,7 @@ export class VideosController {
   @ApiOperation({ summary: 'Add comment to video' })
   @ApiResponse({ status: 200, description: 'Comment added successfully' })
   @ApiResponse({ status: 404, description: 'Video not found' })
-  addComment(@Param('id') id: string, @Body(ValidationPipe) addCommentDto: AddCommentDto) {
+  addComment(@Param('id') id: string, @Body(ValidationPipe) addCommentDto: AddVideoCommentDto) {
     return this.videosService.addComment(id, addCommentDto);
   }
 

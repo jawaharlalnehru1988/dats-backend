@@ -3,11 +3,11 @@ import { Document } from 'mongoose';
 
 @Schema({ _id: false })
 export class Comment {
-  @Prop({ required: true })
-  comment: string;
+  @Prop({ required: false })
+  comment?: string;
 
-  @Prop({ required: true })
-  userName: string;
+  @Prop({ required: false })
+  userName?: string;
 
   @Prop({ default: Date.now })
   createdAt: Date;

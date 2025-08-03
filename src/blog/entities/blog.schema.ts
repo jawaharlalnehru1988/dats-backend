@@ -1,25 +1,33 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
+@Schema({ _id: false })
+export class Comment {
+  @Prop({ required: false })
+  userName?: string;
+
+  @Prop({ required: false })
+  comment?: string;
+}
+
+const CommentSchema = SchemaFactory.createForClass(Comment);
+
+@Schema({ timestamps: true })
 export class Blog extends Document {
   @Prop({ required: true })
-  value: string;
+  blogTitle: string;
+
+  @Prop({ required: true })
+  blogImgUrl: string;
 
   @Prop({ required: true })
   content: string;
 
   @Prop({ required: true })
-  orderNo: number;
+  author: string;
 
-  @Prop({ required: true })
-  heading: string;
-
-  @Prop({ default: Date.now })
-  createdAt: Date;
-
-  @Prop({ default: Date.now })
-  updatedAt: Date;
+  @Prop({ type: [CommentSchema], default: [] })
+  comments: Comment[];
 }
 
 export const BlogSchema = SchemaFactory.createForClass(Blog);

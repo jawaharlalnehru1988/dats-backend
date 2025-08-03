@@ -1,11 +1,11 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsOptional } from 'class-validator';
 
-export class AddCommentDto {
+export class AddVideoCommentDto {
   @IsString()
-  @IsNotEmpty()
-  comment: string;
+  @IsOptional()
+  comment?: string;
 
   @IsString()
-  @IsNotEmpty()
-  userName: string;
+  @IsOptional()
+  userName?: string;
 }
