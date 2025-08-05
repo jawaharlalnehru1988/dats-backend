@@ -16,6 +16,8 @@ import { HarekrishnaPhilosophyModule } from './harekrishna-philosophy/harekrishn
 import { DiscussionsModule } from './discussions/discussions.module';
 import { ImagesModule } from './images/images.module';
 import { VideosModule } from './videos/videos.module';
+import { BooksModule } from './books/books.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { VideosModule } from './videos/videos.module';
     DiscussionsModule,
     ImagesModule,
     VideosModule,
+    BooksModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

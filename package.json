@@ -17,7 +17,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "seed:books": "npm run build && node scripts/seed.js books",
+    "seed:books:force": "npm run build && node scripts/seed.js books --force",
+    "seed:chapters": "npm run build && node scripts/seed.js chapters",
+    "seed:stats": "npm run build && node scripts/seed.js stats"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
