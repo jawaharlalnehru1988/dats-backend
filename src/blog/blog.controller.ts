@@ -29,11 +29,10 @@ import {
 
 @ApiTags('blog')
 @Controller('blog')
-
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
-  // Admin only - Create new blog
+  // Admin only - Create new blog (default)
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('admin')
   @Post()
@@ -44,7 +43,19 @@ export class BlogController {
     return this.blogService.create(createBlogDto);
   }
 
-  // Public - Get all blogs
+  // Admin only - Create new blog in specific language
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin')
+  @Post(':language')
+  @ApiOperation({ summary: 'Create a new blog in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code (tamil, telugu, hindi, etc.)' })
+  @ApiBody({ type: CreateBlogDto })
+  @ApiResponse({ status: 201, description: 'Blog created successfully.' })
+  createInLanguage(@Param('language') language: string, @Body(ValidationPipe) createBlogDto: CreateBlogDto) {
+    return this.blogService.create(createBlogDto, language);
+  }
+
+  // Public - Get all blogs (default)
   @Get()
   @ApiOperation({ summary: 'Get all blogs' })
   @ApiResponse({ status: 200, description: 'List of all blogs.' })
@@ -52,8 +63,17 @@ export class BlogController {
     return this.blogService.findAll();
   }
 
-  // Public - Get blog by ID
-  @Get(':id')
+  // Public - Get all blogs in specific language
+  @Get(':language')
+  @ApiOperation({ summary: 'Get all blogs in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code (tamil, telugu, hindi, etc.)' })
+  @ApiResponse({ status: 200, description: 'List of all blogs in specific language.' })
+  findAllInLanguage(@Param('language') language: string) {
+    return this.blogService.findAll(language);
+  }
+
+  // Public - Get blog by ID (default)
+  @Get('post/:id')
   @ApiOperation({ summary: 'Get a blog by ID' })
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Blog found.' })
@@ -62,7 +82,18 @@ export class BlogController {
     return this.blogService.findOne(id);
   }
 
-  // Public - Search blogs
+  // Public - Get blog by ID in specific language
+  @Get(':language/post/:id')
+  @ApiOperation({ summary: 'Get a blog by ID in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code' })
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Blog found.' })
+  @ApiResponse({ status: 404, description: 'Blog not found.' })
+  findOneInLanguage(@Param('language') language: string, @Param('id') id: string) {
+    return this.blogService.findOne(id, language);
+  }
+
+  // Public - Search blogs (default)
   @Get('search/query')
   @ApiOperation({ summary: 'Search blogs by title or author' })
   @ApiQuery({ name: 'q', type: String, description: 'Search query' })
@@ -71,7 +102,17 @@ export class BlogController {
     return this.blogService.searchBlogs(query);
   }
 
-  // Public - Get blogs by author
+  // Public - Search blogs in specific language
+  @Get(':language/search/query')
+  @ApiOperation({ summary: 'Search blogs by title or author in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code' })
+  @ApiQuery({ name: 'q', type: String, description: 'Search query' })
+  @ApiResponse({ status: 200, description: 'Search results.' })
+  searchBlogsInLanguage(@Param('language') language: string, @Query('q') query: string) {
+    return this.blogService.searchBlogs(query, language);
+  }
+
+  // Public - Get blogs by author (default)
   @Get('author/:author')
   @ApiOperation({ summary: 'Get blogs by author' })
   @ApiParam({ name: 'author', type: String })
@@ -80,10 +121,20 @@ export class BlogController {
     return this.blogService.getBlogsByAuthor(author);
   }
 
-  // Admin only - Update blog
+  // Public - Get blogs by author in specific language
+  @Get(':language/author/:author')
+  @ApiOperation({ summary: 'Get blogs by author in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code' })
+  @ApiParam({ name: 'author', type: String })
+  @ApiResponse({ status: 200, description: 'Blogs by author.' })
+  getBlogsByAuthorInLanguage(@Param('language') language: string, @Param('author') author: string) {
+    return this.blogService.getBlogsByAuthor(author, language);
+  }
+
+  // Admin only - Update blog (default)
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('admin')
-  @Patch(':id')
+  @Patch('post/:id')
   @ApiOperation({ summary: 'Update a blog by ID' })
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ type: UpdateBlogDto })
@@ -93,8 +144,22 @@ export class BlogController {
     return this.blogService.update(id, updateBlogDto);
   }
 
-  // Public - Add comment to blog
-  @Post(':id/comments')
+  // Admin only - Update blog in specific language
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin')
+  @Patch(':language/post/:id')
+  @ApiOperation({ summary: 'Update a blog by ID in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code' })
+  @ApiParam({ name: 'id', type: String })
+  @ApiBody({ type: UpdateBlogDto })
+  @ApiResponse({ status: 200, description: 'Blog updated successfully.' })
+  @ApiResponse({ status: 404, description: 'Blog not found.' })
+  updateInLanguage(@Param('language') language: string, @Param('id') id: string, @Body(ValidationPipe) updateBlogDto: UpdateBlogDto) {
+    return this.blogService.update(id, updateBlogDto, language);
+  }
+
+  // Public - Add comment to blog (default)
+  @Post('post/:id/comments')
   @ApiOperation({ summary: 'Add a comment to a blog' })
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ type: AddCommentDto })
@@ -104,10 +169,22 @@ export class BlogController {
     return this.blogService.addComment(id, addCommentDto);
   }
 
-  // Admin only - Remove comment from blog
+  // Public - Add comment to blog in specific language
+  @Post(':language/post/:id/comments')
+  @ApiOperation({ summary: 'Add a comment to a blog in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code' })
+  @ApiParam({ name: 'id', type: String })
+  @ApiBody({ type: AddCommentDto })
+  @ApiResponse({ status: 200, description: 'Comment added successfully.' })
+  @ApiResponse({ status: 404, description: 'Blog not found.' })
+  addCommentInLanguage(@Param('language') language: string, @Param('id') id: string, @Body(ValidationPipe) addCommentDto: AddCommentDto) {
+    return this.blogService.addComment(id, addCommentDto, language);
+  }
+
+  // Admin only - Remove comment from blog (default)
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('admin')
-  @Delete(':blogId/comments/:commentIndex')
+  @Delete('post/:blogId/comments/:commentIndex')
   @ApiOperation({ summary: 'Remove a comment from a blog' })
   @ApiParam({ name: 'blogId', type: String })
   @ApiParam({ name: 'commentIndex', type: Number })
@@ -117,15 +194,42 @@ export class BlogController {
     return this.blogService.removeComment(blogId, parseInt(commentIndex));
   }
 
-  // Admin only - Delete blog
+  // Admin only - Remove comment from blog in specific language
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('admin')
-  @Delete(':id')
+  @Delete(':language/post/:blogId/comments/:commentIndex')
+  @ApiOperation({ summary: 'Remove a comment from a blog in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code' })
+  @ApiParam({ name: 'blogId', type: String })
+  @ApiParam({ name: 'commentIndex', type: Number })
+  @ApiResponse({ status: 200, description: 'Comment removed successfully.' })
+  @ApiResponse({ status: 404, description: 'Blog or comment not found.' })
+  removeCommentInLanguage(@Param('language') language: string, @Param('blogId') blogId: string, @Param('commentIndex') commentIndex: string) {
+    return this.blogService.removeComment(blogId, parseInt(commentIndex), language);
+  }
+
+  // Admin only - Delete blog (default)
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin')
+  @Delete('post/:id')
   @ApiOperation({ summary: 'Delete a blog by ID' })
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Blog deleted successfully.' })
   @ApiResponse({ status: 404, description: 'Blog not found.' })
   remove(@Param('id') id: string) {
     return this.blogService.remove(id);
+  }
+
+  // Admin only - Delete blog in specific language
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin')
+  @Delete(':language/post/:id')
+  @ApiOperation({ summary: 'Delete a blog by ID in specific language' })
+  @ApiParam({ name: 'language', type: String, description: 'Language code' })
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Blog deleted successfully.' })
+  @ApiResponse({ status: 404, description: 'Blog not found.' })
+  removeInLanguage(@Param('language') language: string, @Param('id') id: string) {
+    return this.blogService.remove(id, language);
   }
 }

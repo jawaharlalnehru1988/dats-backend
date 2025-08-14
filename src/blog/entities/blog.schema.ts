@@ -24,6 +24,9 @@ export class Blog extends Document {
   content: string;
 
   @Prop({ required: true })
+  category: string;
+
+  @Prop({ required: true })
   author: string;
 
   @Prop({ type: [CommentSchema], default: [] })

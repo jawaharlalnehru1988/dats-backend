@@ -31,6 +31,11 @@ export class CreateBlogDto {
   @IsNotEmpty()
   content: string;
 
+  @ApiProperty({ description: 'Language of the blog post' })
+  @IsString()
+  @IsNotEmpty()
+  category: string;
+
   @ApiProperty({ description: 'Author of the blog post' })
   @IsString()
   @IsNotEmpty()
