@@ -269,7 +269,6 @@ export class Book extends Document {
 export const BookSchema = SchemaFactory.createForClass(Book);
 
 // Indexes for better performance
-BookSchema.index({ slug: 1 });
 BookSchema.index({ category: 1 });
 BookSchema.index({ status: 1 });
 BookSchema.index({ 'chapters.chapterNumber': 1 });
