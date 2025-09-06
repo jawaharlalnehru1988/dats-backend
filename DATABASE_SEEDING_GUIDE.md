@@ -31,16 +31,16 @@ Then use these endpoints:
 
 ```bash
 # Seed books
-POST http://localhost:3000/seed/books
+POST http://localhost:4000/seed/books
 
 # Force seed books (clears existing)
-POST http://localhost:3000/seed/books/force
+POST http://localhost:4000/seed/books/force
 
 # Add chapters to Bhagavad Gita
-POST http://localhost:3000/seed/books/bg/chapters
+POST http://localhost:4000/seed/books/bg/chapters
 
 # Get statistics
-GET http://localhost:3000/seed/stats
+GET http://localhost:4000/seed/stats
 ```
 
 ### Method 3: Direct service call
@@ -76,16 +76,16 @@ async seedData() {
 ### Check via API
 ```bash
 # Get all books
-GET http://localhost:3000/books
+GET http://localhost:4000/books
 
 # Get Bhagavad Gita
-GET http://localhost:3000/books/bg
+GET http://localhost:4000/books/bg
 
 # Get Chapter 1
-GET http://localhost:3000/books/bg/chapters/1
+GET http://localhost:4000/books/bg/chapters/1
 
 # Get Verse 1.1
-GET http://localhost:3000/books/bg/chapters/1/verses/1
+GET http://localhost:4000/books/bg/chapters/1/verses/1
 ```
 
 ### Check via MongoDB

@@ -21,5 +21,5 @@ COPY --from=builder /app/dist ./dist
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
 
-EXPOSE 3000
+EXPOSE 4000
 CMD ["node", "dist/main.js"]

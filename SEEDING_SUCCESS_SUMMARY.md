@@ -39,16 +39,16 @@ npm run seed:stats
 ### **Method 2: Using API endpoints**
 ```bash
 # Seed books
-POST http://localhost:3000/seed/books
+POST http://localhost:4000/seed/books
 
 # Force seed
-POST http://localhost:3000/seed/books/force
+POST http://localhost:4000/seed/books/force
 
 # Add chapters
-POST http://localhost:3000/seed/books/bg/chapters
+POST http://localhost:4000/seed/books/bg/chapters
 
 # Get stats
-GET http://localhost:3000/seed/stats
+GET http://localhost:4000/seed/stats
 ```
 
 ### **Method 3: CLI script**
@@ -67,27 +67,27 @@ node scripts/seed.js stats
 
 ### **Get all books:**
 ```bash
-GET http://localhost:3000/books
+GET http://localhost:4000/books
 ```
 
 ### **Get Bhagavad Gita:**
 ```bash
-GET http://localhost:3000/books/bg
+GET http://localhost:4000/books/bg
 ```
 
 ### **Get Chapter 1:**
 ```bash
-GET http://localhost:3000/books/bg/chapters/1
+GET http://localhost:4000/books/bg/chapters/1
 ```
 
 ### **Get Verse 1.1:**
 ```bash
-GET http://localhost:3000/books/bg/chapters/1/verses/1
+GET http://localhost:4000/books/bg/chapters/1/verses/1
 ```
 
 ### **Search across all content:**
 ```bash
-GET http://localhost:3000/books/search?q=dharma
+GET http://localhost:4000/books/search?q=dharma
 ```
 
 ## 📝 **Sample Data Structure:**

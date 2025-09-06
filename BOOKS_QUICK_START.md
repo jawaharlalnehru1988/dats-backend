@@ -10,14 +10,14 @@ npm run start:dev
 ```
 
 ### 2. API Documentation
-Once the server is running, visit: `http://localhost:3000/api`
+Once the server is running, visit: `http://localhost:4000/api`
 (Swagger documentation will be available if configured)
 
 ### 3. Test the APIs
 
 #### Create your first book:
 ```bash
-POST http://localhost:3000/books
+POST http://localhost:4000/books
 Content-Type: application/json
 
 {
@@ -32,17 +32,17 @@ Content-Type: application/json
 
 #### Get all books:
 ```bash
-GET http://localhost:3000/books
+GET http://localhost:4000/books
 ```
 
 #### Get book by slug:
 ```bash
-GET http://localhost:3000/books/bg
+GET http://localhost:4000/books/bg
 ```
 
 #### Search across all content:
 ```bash
-GET http://localhost:3000/books/search?q=dharma
+GET http://localhost:4000/books/search?q=dharma
 ```
 
 ### 4. Sample Data Import

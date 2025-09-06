@@ -144,7 +144,7 @@ Authorization: Bearer <jwt_token>
 
 ### Creating a Kirtan (Admin)
 ```bash
-curl -X POST http://localhost:3000/harekrishna-kirtan \
+curl -X POST http://localhost:4000/harekrishna-kirtan \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -162,12 +162,12 @@ curl -X POST http://localhost:3000/harekrishna-kirtan \
 
 ### Getting All Kirtans (Public)
 ```bash
-curl http://localhost:3000/harekrishna-kirtan
+curl http://localhost:4000/harekrishna-kirtan
 ```
 
 ### Searching by Rating (Public)
 ```bash
-curl "http://localhost:3000/harekrishna-kirtan/search/rating?minRating=4"
+curl "http://localhost:4000/harekrishna-kirtan/search/rating?minRating=4"
 ```
 
 ## Features
