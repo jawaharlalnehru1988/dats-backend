@@ -19,6 +19,7 @@ import { VideosModule } from './videos/videos.module';
 import { BooksModule } from './books/books.module';
 import { SeedModule } from './seed/seed.module';
 import { FestivalsModule } from './festivals/festivals.module';
+import { ChantingModule } from './chanting/chanting.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { FestivalsModule } from './festivals/festivals.module';
     BooksModule,
     SeedModule,
     FestivalsModule,
+    ChantingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
