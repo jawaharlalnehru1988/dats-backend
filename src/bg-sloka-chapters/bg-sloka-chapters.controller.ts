@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -19,17 +18,13 @@ import { BgSlokaChaptersService } from './bg-sloka-chapters.service';
 import { CreateBgSlokaChapterDto } from './dto/create-bg-sloka-chapter.dto';
 import { UpdateBgSlokaChapterDto } from './dto/update-bg-sloka-chapter.dto';
 import { BgSlokaChapter } from './entities/bg-sloka-chapter.schema';
-import { AuthGuard } from '../auth/auth.guard';
-import { Roles } from '../auth/roles.decorator';
 
 @ApiTags('bg-sloka-chapters')
 @Controller('bg-sloka-chapters')
 export class BgSlokaChaptersController {
   constructor(private readonly service: BgSlokaChaptersService) {}
 
-  // Admin only - Create new chapter
-  @UseGuards(AuthGuard)
-  @Roles('admin')
+  // Public - Create new chapter (now open to everyone)
   @Post()
   @ApiOperation({ summary: 'Create a new chapter' })
   @ApiBody({ type: CreateBgSlokaChapterDto })
@@ -55,9 +50,7 @@ export class BgSlokaChaptersController {
     return this.service.findOne(id);
   }
 
-  // Admin only - Update chapter
-  @UseGuards(AuthGuard)
-  @Roles('admin')
+  // Public - Update chapter (now open to everyone)
   @Patch(':id')
   @ApiOperation({ summary: 'Update chapter by ID' })
   @ApiParam({ name: 'id', type: String })
@@ -67,9 +60,7 @@ export class BgSlokaChaptersController {
     return this.service.update(id, dto);
   }
 
-  // Admin only - Delete chapter
-  @UseGuards(AuthGuard)
-  @Roles('admin')
+  // Public - Delete chapter (now open to everyone)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete chapter by ID' })
   @ApiParam({ name: 'id', type: String })

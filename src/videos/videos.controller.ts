@@ -6,8 +6,7 @@ import {
   Patch, 
   Param, 
   Delete, 
-  Query, 
-  UseGuards,
+  Query,
   ValidationPipe 
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
@@ -15,18 +14,13 @@ import { VideosService } from './videos.service';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
 import { AddVideoCommentDto } from './dto/add-comment.dto';
-import { AuthGuard } from '../auth/auth.guard';
-import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/roles.decorator';
 
 @ApiTags('videos')
 @Controller('videos')
 export class VideosController {
   constructor(private readonly videosService: VideosService) {}
 
-  // Admin only - Create new video
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Create new video (now open to everyone)
   @Post()
   @ApiOperation({ summary: 'Create a new video' })
   @ApiResponse({ status: 201, description: 'Video created successfully' })
@@ -67,9 +61,7 @@ export class VideosController {
     return this.videosService.findByDescription(description);
   }
 
-  // Admin only - Update video
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Update video (now open to everyone)
   @Patch(':id')
   @ApiOperation({ summary: 'Update video by ID' })
   @ApiResponse({ status: 200, description: 'Video updated successfully' })
@@ -87,9 +79,7 @@ export class VideosController {
     return this.videosService.addComment(id, addCommentDto);
   }
 
-  // Admin only - Remove comment from video
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Remove comment from video (now open to everyone)
   @Delete(':id/comments/:commentIndex')
   @ApiOperation({ summary: 'Remove comment from video' })
   @ApiResponse({ status: 200, description: 'Comment removed successfully' })
@@ -98,9 +88,7 @@ export class VideosController {
     return this.videosService.removeComment(id, parseInt(commentIndex));
   }
 
-  // Admin only - Delete video
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Delete video (now open to everyone)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete video by ID' })
   @ApiResponse({ status: 200, description: 'Video deleted successfully' })

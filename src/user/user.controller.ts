@@ -6,15 +6,11 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
   BadRequestException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AuthGuard } from '../auth/auth.guard';
-import { Roles } from '../auth/roles.decorator';
-import { CurrentUser, UserPayload } from '../auth/user.decorator';
 
 @Controller('user')
 export class UserController {
@@ -31,44 +27,34 @@ export class UserController {
     return this.userService.login(email, password);
   }
 
-  // Protected routes (authentication required)
-  @UseGuards(AuthGuard)
+  // Public - User profile (now open to everyone)
   @Get('profile')
-  getProfile(@CurrentUser() user: UserPayload) {
-    return { message: 'User profile', user };
+  getProfile() {
+    return { message: 'User profile endpoint is public now' };
   }
 
-  // Admin only routes
-  @UseGuards(AuthGuard)
-  @Roles('admin')
+  // Public - Get all users (now open to everyone)
   @Get()
   findAll() {
     return this.userService.findAll();
   }
 
-  @UseGuards(AuthGuard)
-  @Roles('admin', 'user')
+  // Public - Get user by ID (now open to everyone)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
 
-  @UseGuards(AuthGuard)
+  // Public - Update user (now open to everyone)
   @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-    @CurrentUser() user: UserPayload,
   ) {
-    // Users can only update their own profile, unless they're admin
-    if (user.role !== 'admin' && user.sub !== id) {
-      throw new BadRequestException('You can only update your own profile');
-    }
     return this.userService.update(id, updateUserDto);
   }
 
-  @UseGuards(AuthGuard)
-  @Roles('admin')
+  // Public - Delete user (now open to everyone)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);

@@ -7,16 +7,12 @@ import {
   Patch,
   Delete,
   Query,
-  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { AddCommentDto } from './dto/add-comment.dto';
-import { AuthGuard } from '../auth/auth.guard';
-import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/roles.decorator';
 import {
   ApiBody,
   ApiOperation,
@@ -32,9 +28,7 @@ import {
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
-  // Admin only - Create new blog (default)
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Create new blog (now open to everyone)
   @Post()
   @ApiOperation({ summary: 'Create a new blog' })
   @ApiBody({ type: CreateBlogDto })
@@ -43,9 +37,7 @@ export class BlogController {
     return this.blogService.create(createBlogDto);
   }
 
-  // Admin only - Create new blog in specific language
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Create new blog in specific language (now open to everyone)
   @Post(':language')
   @ApiOperation({ summary: 'Create a new blog in specific language' })
   @ApiParam({ name: 'language', type: String, description: 'Language code (tamil, telugu, hindi, etc.)' })
@@ -131,9 +123,7 @@ export class BlogController {
     return this.blogService.getBlogsByAuthor(author, language);
   }
 
-  // Admin only - Update blog (default)
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Update blog (now open to everyone)
   @Patch('post/:id')
   @ApiOperation({ summary: 'Update a blog by ID' })
   @ApiParam({ name: 'id', type: String })
@@ -144,9 +134,7 @@ export class BlogController {
     return this.blogService.update(id, updateBlogDto);
   }
 
-  // Admin only - Update blog in specific language
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Update blog in specific language
   @Patch(':language/post/:id')
   @ApiOperation({ summary: 'Update a blog by ID in specific language' })
   @ApiParam({ name: 'language', type: String, description: 'Language code' })
@@ -181,9 +169,7 @@ export class BlogController {
     return this.blogService.addComment(id, addCommentDto, language);
   }
 
-  // Admin only - Remove comment from blog (default)
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Remove comment from blog (default)
   @Delete('post/:blogId/comments/:commentIndex')
   @ApiOperation({ summary: 'Remove a comment from a blog' })
   @ApiParam({ name: 'blogId', type: String })
@@ -194,9 +180,7 @@ export class BlogController {
     return this.blogService.removeComment(blogId, parseInt(commentIndex));
   }
 
-  // Admin only - Remove comment from blog in specific language
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Remove comment from blog in specific language
   @Delete(':language/post/:blogId/comments/:commentIndex')
   @ApiOperation({ summary: 'Remove a comment from a blog in specific language' })
   @ApiParam({ name: 'language', type: String, description: 'Language code' })
@@ -208,9 +192,7 @@ export class BlogController {
     return this.blogService.removeComment(blogId, parseInt(commentIndex), language);
   }
 
-  // Admin only - Delete blog (default)
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Delete blog (default)
   @Delete('post/:id')
   @ApiOperation({ summary: 'Delete a blog by ID' })
   @ApiParam({ name: 'id', type: String })
@@ -220,9 +202,7 @@ export class BlogController {
     return this.blogService.remove(id);
   }
 
-  // Admin only - Delete blog in specific language
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
+  // Public - Delete blog in specific language
   @Delete(':language/post/:id')
   @ApiOperation({ summary: 'Delete a blog by ID in specific language' })
   @ApiParam({ name: 'language', type: String, description: 'Language code' })
