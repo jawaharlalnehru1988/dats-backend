@@ -41,6 +41,20 @@ export class BgSlokaChaptersController {
     return this.service.findAll();
   }
 
+  // Public - Get slokas by category (e.g., tamil, hindi, etc.)
+  @Get('category/:categoryName')
+  @ApiOperation({ summary: 'Get chapters by category name' })
+  @ApiParam({ 
+    name: 'categoryName', 
+    type: String,
+    description: 'Category name (e.g., tamil for "Bhagavad Gita Tamil")',
+    example: 'tamil'
+  })
+  @ApiResponse({ status: 200, type: [BgSlokaChapter] })
+  findByCategory(@Param('categoryName') categoryName: string) {
+    return this.service.findByCategory(categoryName);
+  }
+
   // Public - Anyone can view a specific chapter
   @Get(':id')
   @ApiOperation({ summary: 'Get chapter by ID' })

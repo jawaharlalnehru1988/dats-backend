@@ -54,6 +54,44 @@ export class BgSlokaChaptersService {
     return this.chapterModel.findById(id).exec();
   }
 
+  async findByCategory(categoryName: string): Promise<GroupedData[]> {
+    // Create the full category name based on the input
+    // e.g., 'tamil' -> 'Bhagavad Gita Tamil'
+    const fullCategoryName = `Bhagavad Gita ${categoryName.charAt(0).toUpperCase() + categoryName.slice(1).toLowerCase()}`;
+    
+    // Find all items that match the category name (case-insensitive)
+    const items = await this.chapterModel
+      .find({
+        categoryName: { $regex: new RegExp(fullCategoryName, 'i') }
+      })
+      .exec();
+
+    // Group by categoryName and merge cardItems (same logic as findAll but filtered)
+    const groupedData: GroupedData[] = items.reduce(
+      (acc: GroupedData[], item) => {
+        const existingCategory = acc.find(
+          (group) => group.categoryName === item.categoryName,
+        );
+
+        if (existingCategory) {
+          // Merge cardItems from current item into existing category
+          existingCategory.cardItems.push(...item.cardItems);
+        } else {
+          // Create new category group
+          acc.push({
+            categoryName: item.categoryName,
+            cardItems: [...item.cardItems],
+          });
+        }
+
+        return acc;
+      },
+      [],
+    );
+
+    return groupedData;
+  }
+
   async update(
     id: string,
     dto: UpdateBgSlokaChapterDto,
