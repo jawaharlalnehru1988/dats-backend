@@ -16,10 +16,10 @@ import { HarekrishnaPhilosophyModule } from './harekrishna-philosophy/harekrishn
 import { DiscussionsModule } from './discussions/discussions.module';
 import { ImagesModule } from './images/images.module';
 import { VideosModule } from './videos/videos.module';
-import { BooksModule } from './books/books.module';
 import { SeedModule } from './seed/seed.module';
 import { FestivalsModule } from './festivals/festivals.module';
 import { ChantingModule } from './chanting/chanting.module';
+import { SlokaSearchModule } from './sloka-search/sloka-search.module';
 
 @Module({
   imports: [
@@ -38,10 +38,10 @@ import { ChantingModule } from './chanting/chanting.module';
     DiscussionsModule,
     ImagesModule,
     VideosModule,
-    BooksModule,
     SeedModule,
     FestivalsModule,
     ChantingModule,
+    SlokaSearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

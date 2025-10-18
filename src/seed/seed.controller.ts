@@ -7,34 +7,14 @@ import { SeedService } from './seed.service';
 export class SeedController {
   constructor(private readonly seedService: SeedService) {}
 
-  @Post('books')
+  @Post('data')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Seed sample books data into database' })
-  @ApiResponse({ status: 200, description: 'Books seeded successfully' })
-  @ApiResponse({ status: 400, description: 'Error seeding books' })
-  async seedBooks() {
-    await this.seedService.seedBooks();
-    return { message: 'Books seeded successfully!' };
-  }
-
-  @Post('books/force')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Force seed books (clears existing data)' })
-  @ApiResponse({ status: 200, description: 'Books force seeded successfully' })
-  @ApiResponse({ status: 400, description: 'Error force seeding books' })
-  async seedBooksForce() {
-    await this.seedService.seedBooksForce();
-    return { message: 'Books force seeded successfully!' };
-  }
-
-  @Post('books/bg/chapters')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Add additional chapters to Bhagavad Gita' })
-  @ApiResponse({ status: 200, description: 'Chapters added successfully' })
-  @ApiResponse({ status: 404, description: 'Bhagavad Gita book not found' })
-  async seedBhagavadGitaChapters() {
-    await this.seedService.seedBhagavadGitaChapters();
-    return { message: 'Additional chapters added to Bhagavad Gita!' };
+  @ApiOperation({ summary: 'Seed sample data into database' })
+  @ApiResponse({ status: 200, description: 'Data seeded successfully' })
+  @ApiResponse({ status: 400, description: 'Error seeding data' })
+  async seedData() {
+    await this.seedService.seedData();
+    return { message: 'Data seeded successfully!' };
   }
 
   @Get('stats')
