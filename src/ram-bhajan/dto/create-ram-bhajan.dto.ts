@@ -1,46 +1,80 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, ValidateNested, IsArray } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class AudioDataDto {
-  @ApiProperty()
+  @ApiProperty({ description: 'Audio source URL' })
+  @IsString()
+  @IsNotEmpty()
   audioSrc: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Image source URL' })
+  @IsString()
+  @IsNotEmpty()
   imageSrc: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Author name' })
+  @IsString()
+  @IsNotEmpty()
   auther: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Audio title' })
+  @IsString()
+  @IsNotEmpty()
   title: string;
 }
 
 export class CardItemDto {
-  @ApiProperty()
+  @ApiProperty({ description: 'Image URL' })
+  @IsString()
+  @IsNotEmpty()
   img: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Title' })
+  @IsString()
+  @IsNotEmpty()
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Category' })
+  @IsString()
+  @IsNotEmpty()
   category: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Description' })
+  @IsString()
+  @IsNotEmpty()
   desc: string;
 
-  @ApiProperty({ type: AudioDataDto })
+  @ApiProperty({ description: 'Tamil description' })
+  @IsString()
+  @IsNotEmpty()
+  tamilDescription: string;
+
+  @ApiProperty({ type: AudioDataDto, description: 'Audio data' })
+  @ValidateNested()
+  @Type(() => AudioDataDto)
   audioData: AudioDataDto;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Rating' })
+  @IsString()
+  @IsNotEmpty()
   rating: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Action' })
+  @IsString()
+  @IsNotEmpty()
   action: string;
 }
 
 export class CreateRamBhajanDto {
-  @ApiProperty()
+  @ApiProperty({ description: 'Category name' })
+  @IsString()
+  @IsNotEmpty()
   categoryName: string;
 
-  @ApiProperty({ type: [CardItemDto] })
+  @ApiProperty({ type: [CardItemDto], description: 'Array of card items' })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CardItemDto)
   cardItems: CardItemDto[];
 }

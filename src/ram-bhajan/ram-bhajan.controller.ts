@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -36,6 +37,13 @@ export class RamBhajanController {
   @ApiResponse({ status: 200, description: 'List of Ram Bhajan categories.' })
   findAll() {
     return this.ramBhajanService.findAll();
+  }
+
+  @Get('flat')
+  @ApiOperation({ summary: 'Get all Ram Bhajan items without grouping' })
+  @ApiResponse({ status: 200, description: 'List of all Ram Bhajan items in flat structure.' })
+  findAllFlat() {
+    return this.ramBhajanService.findAllFlat();
   }
 
   @Get(':id')

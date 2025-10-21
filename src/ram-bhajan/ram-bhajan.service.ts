@@ -50,6 +50,10 @@ export class RamBhajanService {
     return groupedData;
   }
 
+  async findAllFlat(): Promise<RamBhajan[]> {
+    return await this.ramBhajanModel.find().exec();
+  }
+
   async findOne(id: string): Promise<RamBhajan | null> {
     const item = await this.ramBhajanModel.findById(id).exec();
     if (!item) throw new NotFoundException('Not found');

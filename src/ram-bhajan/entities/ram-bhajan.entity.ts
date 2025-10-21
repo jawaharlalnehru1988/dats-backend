@@ -10,6 +10,7 @@ export class CardItem {
   title: string;
   category: string;
   desc: string;
+  tamilDescription: string;
   audioData: AudioData;
   rating: string;
   action: string;

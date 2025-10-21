@@ -32,6 +32,9 @@ export class CardItem {
   @Prop({ required: true })
   desc: string;
 
+  @Prop({ required: true })
+  tamilDescription: string;
+
   @Prop({ type: AudioDataSchema, required: true })
   audioData: AudioData;
 
