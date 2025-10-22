@@ -13,12 +13,14 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   
-  // Enable CORS with all origins access
+  // Enable CORS with all origins access for open source
   app.enableCors({
-    origin: true, // Allows all origins
+    origin: '*', // Explicitly allow all origins for open source
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
-    credentials: true, // Allow cookies and authorization headers
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With', 'Access-Control-Request-Method', 'Access-Control-Request-Headers'],
+    credentials: false, // Set to false when using origin: '*' for broader compatibility
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   });
 
   const port = process.env.PORT ?? 4000;
